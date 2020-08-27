@@ -131,4 +131,4 @@ def csv_pooler(csv_list):
             writer1.writerow(row)
 
 
-csv_pooler(massive_report_to_csv('C:\\Users\\omega\\PycharmProjects\\PythonLearn101\\Test_files\\Barcode_reports'))
+csv_pooler(massive_report_to_csv(''))

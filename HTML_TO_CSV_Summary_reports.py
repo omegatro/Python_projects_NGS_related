@@ -179,6 +179,6 @@ def csv_pooler(csv_list):
     # The data stored in the pooled_list are added to the new, combined .csv file.
 
 
-csv_pooler(massive_report_to_csv('C:\\Users\\omega\\PycharmProjects\\PythonLearn101\\Test_files\\Summary_reports'))
+csv_pooler(massive_report_to_csv(''))
 # The nested function call to initiate the program; wdpath variable of massive_report_to_csv...
 # ... should be changed according to the location of files.

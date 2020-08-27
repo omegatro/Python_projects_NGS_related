@@ -13,4 +13,4 @@ def clear_csv(directory_path, name = '.csv'):
 # The function is used to clear all files that contain .csv in their name from the specified directory.
 
 
-clear_csv('C:\\Users\\omega\\PycharmProjects\\PythonLearn101\\Test_files\\Barcode_reports')
+clear_csv('')

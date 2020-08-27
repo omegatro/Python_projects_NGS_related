@@ -1,6 +1,6 @@
 import os
 
-folder_path_to_check = "C:\\Users\\omega\\PycharmProjects\\PythonLearn101\\Test_files\\Summary_reports"
+folder_path_to_check = ""
 file_list = os.listdir(folder_path_to_check)
 print("There are the following .html files in the  Summary report folder: ")
 [print("    " + f_name) for f_name in file_list if ".html" in f_name]

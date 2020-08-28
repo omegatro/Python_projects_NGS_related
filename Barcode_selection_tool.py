@@ -9,22 +9,19 @@ import sys
 def clear_pools(directory_path, name='Pool'):
     os.chdir(directory_path)
     list_of_files = os.listdir(os.getcwd())
-    list_of_csv_local = []
     for n in list_of_files:
         if name in n:
-            list_of_csv_local.append(n)
-    for file in list_of_csv_local:
-        os.remove(file)
-
+            os.remove(name)
+# The function is used to clear the previously-generated pool files from the working directory of the script.
 
 def bc_list_generator(file_name):
     reader = csv.reader(open(file_name, 'r'))
     bc_list = []
-
     for row_1 in reader:
         bc_list.append([row_1[0], row_1[1]])
     return bc_list
-
+# The function is used to get the list of barcodes that are used in the laboratory. 
+# The list is provided by the user as .csv file with barcode numbers in column A and barcode nucleotide sequence in column B.
 
 def barcode_compatibility_test(list_of_barcodes_to_check):
     nucleotide_counter = 0
@@ -57,6 +54,9 @@ def barcode_compatibility_test(list_of_barcodes_to_check):
         barcode_compatibility_data.append([dcr_pos_in_bc_seq + 1, a_count, t_count, g_count, c_count])
         dcr_pos_in_bc_seq += 1
     return barcode_compatibility_data
+# The function is used to count the number of times each nucleotide appears in each position in the provided set of barcodes of equal length...
+# ... as a fraction of total number of nucleotide in the corresponding position of a set.
+# The generated output is a Profile of a given set of barcodes.
 
 
 def bc_generator_call():
@@ -72,6 +72,7 @@ def bc_generator_call():
             bc_generator_call()
     else:
         return [list_of_barcodes, pool_size]
+# The function is used to provide a text-based user interface for the call of bc_list_generator function.
 
 
 def get_barcode_combinations(pool_length, list_of_barcodes_1, report=1):
@@ -96,7 +97,11 @@ def get_barcode_combinations(pool_length, list_of_barcodes_1, report=1):
             return subset
         else:
             continue
-
+# The function allows to select a combination of compatible barcode based on the criteria that any given nucleotide must not appear in the n-th position...
+# ... in the sequence less that 12% of the time.
+# The function generates a list of all possible combinations of barcodes from the list_of_barcodes_1 by pool_lenght (C(L_O_B,P_L)).
+# Then it iterates over the list and applies the barcode_compatibility test function to every combination...
+# ...until it finds the combination of barcodes that are compatible based on the specified criteria.
 
 def bc_comp_rep_printer(barcode_combination, file_name=""):
     if barcode_combination is not None:
@@ -116,15 +121,9 @@ def bc_comp_rep_printer(barcode_combination, file_name=""):
                 print("The path to the file is: " + str(os.getcwd()))
 
     else:
-        print("No compatible barcodes are available from this library with selected pool size.")
+        print("No compatible barcodes are available from the provided library with selected pool size.")
         time.sleep(5)
-
-
-# bc_generator = bc_generator_call()
-# # BC_list generated
-# pooled_barcodes = get_barcode_combinations(int(bc_generator[1]), bc_generator[0])
-# # list of pooled barcodes generated
-# bc_comp_rep_printer(get_barcode_combinations(int(bc_generator[1]), bc_generator[0]))
+# The function is used to generate .csv file with a list of compatible barcodes for one pool.
 
 
 def barcode_list_renewer(bc_list, bc_pool):
@@ -133,6 +132,8 @@ def barcode_list_renewer(bc_list, bc_pool):
             if row == row_1:
                 bc_list.remove(row_1)
     return bc_list
+# The function can be used to remove the barcodes that were previously included into the pool, from the list containing barcode library...
+# ... in order to avoid generating pools with identical barcodes.
 
 
 def pool_generator(number_of_pools_to_get):
@@ -152,7 +153,8 @@ def pool_generator(number_of_pools_to_get):
                 if item == item_1:
                     bc_generator[0].remove(item_1)
         bc_comp_rep_printer(get_barcode_combinations(pool_size, bc_generator[0]), str(i+2))
-
+# The function is used to generate several sets of barcodes for multiple pools from one barcode library provided by the user as .csv file.
+# This function combines the previously-defined functions and is used to run the script.
 
 clear_pools(os.getcwd())
 number_of_pools = int(input("Enter the number of pools you need: "))
@@ -166,9 +168,7 @@ else:
     user_input = input("Type n to quit the script: ")
 while user_input != "n":
     user_input = input("Type n to quit the script: ")
-
-
-# Add a recursive function call to ask for new number of barcodes in the pull.
+# Function calling part.
 
 # Below is the code used to get the time it takes to run the code in seconds.
 # start_time = datetime.datetime.now()
@@ -178,5 +178,4 @@ while user_input != "n":
 # end_time = datetime.datetime.now()
 # time_diff = (end_time - start_time)
 # execution_time = time_diff.total_seconds() * 1000
-#
 # print(execution_time)
